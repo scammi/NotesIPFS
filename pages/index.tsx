@@ -8,24 +8,22 @@ const Home = () => {
   const [result, setResult] = useState<BasicIpfsData | null>(null);
 
   const [note, setNote] = useState<BasicIpfsData | null>(null);
+
   const [CID, setCID] = useState("");
-  const [txt, setTxt] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [fileContent, setFileContent] = useState("");
 
   const handleLoad = async () => {
-    if (CID == "") {
-      alert('Cannot be empty');
-      return;
-    }
-
-    const { data } = await axios.get(`/api/ipfs?cid=${CID}`);
+    setLoading(true);
+    const { data } = await axios.get('/api/ipfs');
     console.log(data);
+    setLoading(false);
   };
 
   const handlePost = async () => {
-    setLoading(true);
-    const { data } = await axios.post('/api/ipfs');
-    setResult(data);
-    setLoading(false);
+    await axios.post(
+      `/api/ipfs?fileName=${fileName}&fileContent=${fileContent}`
+    );
   };
 
   // avoiding ternary operators for classes
@@ -53,9 +51,16 @@ const Home = () => {
           <div>
             <input
               type="text"
-              placeholder="Enter text here"
-              value={CID}
-              onChange={(e) => setCID(e.target.value)}
+              placeholder="File name"
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+            />
+            <br />
+            <input
+              type="text"
+              placeholder="Content"
+              value={fileContent}
+              onChange={(e) => setFileContent(e.target.value)}
             />
             <br />
             <button
