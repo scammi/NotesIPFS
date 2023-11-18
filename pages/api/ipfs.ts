@@ -1,8 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import fs from 'fs';
 
 import { create } from "ipfs-http-client";
 import { concat } from 'uint8arrays/concat'
+import { toString } from 'uint8arrays/to-string'
 import all from 'it-all';
 
 
@@ -17,32 +19,47 @@ const handler = async (
   res: NextApiResponse<BasicIpfsData>
 ) => {
   if (req.method === "POST") {
-    // Process a POST request
+
+    const fileName = 'text.txt';
+    const fileContent = 'haaaaa';
+
     const client = create();
-    const string = "Hello world!!";
-    const data = await client.add(string);
-  
-    res.status(200).json({ cid: data.path, content: string });
+
+    try {
+      await client.files.mkdir('/DeSci', { parents: true });
+      await client.files.write(`/DeSci/${fileName}`, Buffer.from(fileContent), { create: true });
+
+    } catch (error) {
+      console.error('Error uploading file to IPFS:', error);
+    }
+
   } else {
     // Handle any other HTTP method
-    retrieveData(req, res);
+    retrieve(req, res);
   }
 }
 
-const retrieveData = async (
+const retrieve = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const { cid } = req.query;
-
   const client = create();
 
-  const datares = concat(await all(client.cat(cid)))
+  const folderDataResponse = client.files.ls('/DeSci');
 
-  const decodedData = new TextDecoder().decode(datares).toString();
+  const folderDataParsed = {};
+  for await (const item of folderDataResponse) {
+    const datares = concat(await all(client.cat(item.cid.toString())))
+    const decodedData = new TextDecoder().decode(datares).toString();
 
-  res.status(200).json({ decodedData });
+    folderDataParsed[item.cid.toString()] = {
+      'name': item.name,
+      'content': decodedData
+    }
+  }
 
+  res.status(200).json({ folderDataParsed });
 };
+
 
 export default handler ;
