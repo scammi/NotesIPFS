@@ -8,12 +8,22 @@ const Home = () => {
   const [result, setResult] = useState<BasicIpfsData | null>(null);
 
   const [note, setNote] = useState<BasicIpfsData | null>(null);
+  const [CID, setCID] = useState("");
   const [txt, setTxt] = useState("");
 
   const handleLoad = async () => {
-    setLoading(true);
+    if (CID == "") {
+      alert('Cannot be empty');
+      return;
+    }
 
-    const { data } = await axios.get("/api/ipfs");
+    const { data } = await axios.get(`/api/ipfs?cid=${CID}`);
+    console.log(data);
+  };
+
+  const handlePost = async () => {
+    setLoading(true);
+    const { data } = await axios.post('/api/ipfs');
     setResult(data);
     setLoading(false);
   };
@@ -41,6 +51,13 @@ const Home = () => {
             </div>
           ) : null}
           <div>
+            <input
+              type="text"
+              placeholder="Enter text here"
+              value={CID}
+              onChange={(e) => setCID(e.target.value)}
+            />
+            <br />
             <button
               onClick={handleLoad}
               className={classNames(
@@ -49,6 +66,12 @@ const Home = () => {
               )}
             >
               {loading ? "Loading..." : "Retrieve Data"}
+            </button>
+            <br />
+            <button
+              onClick={handlePost}
+            >
+              Upload  
             </button>
           </div>
         </div>
