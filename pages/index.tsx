@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { BasicIpfsData } from "./api/ipfs";
 
-export default function Home() {
+const Home = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<BasicIpfsData | null>(null);
 
@@ -56,3 +56,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;

@@ -9,10 +9,10 @@ export type BasicIpfsData = {
   content: string;
 };
 
-export default async function handler(
+const handler = (
   req: NextApiRequest,
   res: NextApiResponse<BasicIpfsData>
-) {
+) => {
   if (req.method === "POST") {
     // Process a POST request
   } else {
@@ -35,3 +35,5 @@ const retrieveData = async (
 
   res.status(200).json({ cid: data.path, content: string });
 };
+
+export default handler ;
