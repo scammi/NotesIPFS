@@ -37,12 +37,6 @@ const Home = () => {
       <main>
         <div className="flex flex-col gap-3">
           <div className="text-3xl font-bold underline">IPFS Notes</div>
-          {!!result ? (
-            <div className="flex flex-col">
-              <span>Content: {result.content}</span>
-              <span>CID: {result.cid}</span>
-            </div>
-          ) : null}
           <div>
             <input
               type="text"
