@@ -1,14 +1,9 @@
 import Head from "next/head";
 import axios from "axios";
 import { useState } from "react";
-import { BasicIpfsData } from "./api/ipfs";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<BasicIpfsData | null>(null);
-
-  const [note, setNote] = useState<BasicIpfsData | null>(null);
-
   const [CID, setCID] = useState("");
   const [fileName, setFileName] = useState("");
   const [fileContent, setFileContent] = useState("");
