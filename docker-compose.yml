@@ -2,9 +2,10 @@ version: '3'
 
 services:  
   ipfs:
-    image: ipfs/go-ipfs:v0.12.1
-    environment:
-      IPFS_SWARM_KEY: "/key/swarm/psk/1.0.0/\n/base16/\n${IPFS_SWARM_KEY}"
+    image: ipfs/kubo
+    # environment:
+      # For now not needed
+      # IPFS_SWARM_KEY: "/key/swarm/psk/1.0.0/\n/base16/\n${IPFS_SWARM_KEY}"
     ports:
       - '5001:5001'
       - '8089:8080'
