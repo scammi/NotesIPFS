@@ -2,6 +2,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { create } from "ipfs-http-client";
+import { concat } from 'uint8arrays/concat'
+import all from 'it-all';
+
 
 // arbitrary response format
 export type BasicIpfsData = {
@@ -9,12 +12,17 @@ export type BasicIpfsData = {
   content: string;
 };
 
-const handler = (
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<BasicIpfsData>
 ) => {
   if (req.method === "POST") {
     // Process a POST request
+    const client = create();
+    const string = "Hello world!!";
+    const data = await client.add(string);
+  
+    res.status(200).json({ cid: data.path, content: string });
   } else {
     // Handle any other HTTP method
     retrieveData(req, res);
@@ -23,17 +31,18 @@ const handler = (
 
 const retrieveData = async (
   req: NextApiRequest,
-  res: NextApiResponse<BasicIpfsData>
+  res: NextApiResponse
 ) => {
-  // connect to the default API address http://localhost:5001
+  const { cid } = req.query;
+
   const client = create();
-  // call Core API methods
-  const string = "Hello world!";
-  const data = await client.add(string);
 
-  console.log(data);
+  const datares = concat(await all(client.cat(cid)))
 
-  res.status(200).json({ cid: data.path, content: string });
+  const decodedData = new TextDecoder().decode(datares).toString();
+
+  res.status(200).json({ decodedData });
+
 };
 
 export default handler ;
