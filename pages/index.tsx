@@ -7,6 +7,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Skeleton from "@mui/material/Skeleton";
 
 import useNotes from "../hooks/useNotes";
 
@@ -17,7 +18,7 @@ const Home = () => {
   const [fileContent, setFileContent] = useState("");
   const enableUpload = !Boolean(fileContent && fileName);
 
-  const { data: notes } = useNotes();
+  const { data: notes, isLoading: isNotesLoading } = useNotes();
   console.log(notes)
 
   const handlePost = async () => {
@@ -25,6 +26,14 @@ const Home = () => {
       `/api/ipfs?fileName=${fileName}&fileContent=${fileContent}`
     );
   };
+
+  const Notes = () => {
+    return Object.entries(notes).map(([key, value]) => (
+      <div key={key}>
+        {value?.name}
+      </div>
+    ));
+  }
 
   return (
     <Container>
@@ -50,15 +59,6 @@ const Home = () => {
                   id="fileNameInput"
                   label="Content"
                 />
-                {/* <button
-                  onClick={handleLoad}
-                  className={classNames(
-                    "bg-slate-300 hover:bg-slate-500 text-black rounded-md p-2 drop-shadow-md w-32",
-                    loading ? "animate-pulse" : ""
-                  )}
-                >
-                  {loading ? "Loading..." : "Retrieve Data"}
-                </button> */}
                 <Button
                   disabled={enableUpload}
                   style={{ margin: "5px" }}
@@ -69,11 +69,7 @@ const Home = () => {
                 </Button>
               </Stack>
             </Paper>
-            {Object.entries(notes).map(([key, value]) => (
-              <div key={key}>
-                {value?.name}
-              </div>
-            ))}
+            {!isNotesLoading ? <Notes /> : <Skeleton variant="rectangular" height={200}/>}
           </Stack>
         </Grid>
       </Grid>
