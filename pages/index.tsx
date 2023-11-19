@@ -38,7 +38,7 @@ const Home = () => {
           <Typography variant="h6">{value.name}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>{value.content}</Typography>
+          <Typography style={{ wordWrap: 'break-word' }}>{value.content}</Typography>
         </AccordionDetails>
       </Accordion>
     ));
@@ -74,7 +74,7 @@ const Home = () => {
                   variant="outlined"
                   onClick={() => addNote({ fileName, fileContent })}
                 >
-                  {isNoteBeingAdded ? <CircularProgress/> : 'Upload'}  
+                  {isNoteBeingAdded ? <CircularProgress /> : 'Upload'}  
                 </Button>
               </Stack>
             </Paper>
