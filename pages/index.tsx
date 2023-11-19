@@ -55,7 +55,7 @@ const Home = () => {
     <Container>
       <Grid container justifyContent="center">
         <Grid item xs={6}>
-          <Stack spacing={5}>
+          <Stack spacing={3}>
             <Paper elevation={4}>
               <Stack spacing={2}>
                 <Typography variant="h5" style={{ marginTop: "10px", marginLeft: "10px" }}> Add note </Typography>
