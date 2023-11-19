@@ -49,17 +49,18 @@ const Home = () => {
       <Grid container justifyContent="center">
         <Grid item xs={6}>
           <Stack spacing={5}>
+            {/* <Typography variant="h5"> Add note </Typography> */}
             <Paper elevation={4}>
               <Stack spacing={2}>
                 <TextField
-                  style={{ margin: "5px" }}
+                  style={{ margin: "10px", marginTop: "15px" }}
                   value={fileName}
                   onChange={(e) => setFileName(e.target.value)}
                   id="fileNameInput"
                   label="File name"
                 />
                 <TextField
-                  style={{ margin: "5px" }}
+                  style={{ margin: "10px" }}
                   multiline={true}
                   rows={3}
                   type="text"
@@ -70,7 +71,7 @@ const Home = () => {
                 />
                 <Button
                   disabled={enableUpload}
-                  style={{ margin: "5px" }}
+                  style={{ margin: "10px" }}
                   variant="outlined"
                   onClick={() => addNote({ fileName, fileContent })}
                 >
@@ -79,7 +80,7 @@ const Home = () => {
               </Stack>
             </Paper>
             <Paper elevation={4}>
-              <Box style={{ margin: "5px" }}>
+              <Box style={{ margin: "10px" }}>
                 {!isNotesLoading ? <Notes /> : <Skeleton variant="rectangular" height={200}/>}
               </Box>
             </Paper>
