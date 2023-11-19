@@ -24,17 +24,24 @@ import useAddNote from "../hooks/useAddNote";
 const Home = () => {
   const [fileName, setFileName] = useState("");
   const [fileContent, setFileContent] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const enableUpload = !Boolean(fileContent && fileName);
 
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
 
   const Notes = () => {
-    return Object.entries(notes).map(([key, value]) => (
+  // Convert object to array of key-value pairs
+  const notesArray = Object.entries(notes);
+
+  // Filter and map notes based on search term
+  return notesArray
+    .filter(([key, value]) =>
+      searchTerm ? value.name.toLowerCase().includes(searchTerm.toLowerCase()) : true
+    )
+    .map(([key, value]) => (
       <Accordion key={key}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-        >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h6">{value.name}</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -80,6 +87,13 @@ const Home = () => {
               </Stack>
             </Paper>
             <Paper elevation={4}>
+              <TextField
+                  style={{ margin: "10px", marginTop: "15px", width: "95%" }}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  id="filterNOtes"
+                  label="Search notes"
+              />
               <Box style={{ margin: "10px" }}>
                 {!isNotesLoading ? <Notes /> : <Skeleton variant="rectangular" height={200}/>}
               </Box>
