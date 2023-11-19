@@ -30,25 +30,54 @@ const Home = () => {
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
 
-  const Notes = () => {
-  // Convert object to array of key-value pairs
-  const notesArray = Object.entries(notes);
+  const handleFileChange = (event) => {
+    console.log('asdf')
+    const fileInput = event.target;
+    const file = fileInput.files[0];
 
-  // Filter and map notes based on search term
-  return notesArray
-    .filter(([key, value]) =>
-      searchTerm ? value.name.toLowerCase().includes(searchTerm.toLowerCase()) : true
-    )
-    .map(([key, value]) => (
-      <Accordion key={key}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h6">{value.name}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography style={{ wordWrap: 'break-word' }}>{value.content}</Typography>
-        </AccordionDetails>
-      </Accordion>
-    ));
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        // e.target.result contains the content of the file
+        const content = e.target.result;
+
+        // file.name contains the name of the file
+        const name = file.name;
+
+        // Set state with file content and name
+        setFileContent(content);
+        setFileName(name);
+
+        // Now you can use fileContent and fileName as needed
+        console.log('File Content:', content);
+        console.log('File Name:', name);
+      };
+
+      // Read the file as text
+      reader.readAsText(file);
+    }
+  };
+
+  const Notes = () => {
+    // Convert object to array of key-value pairs
+    const notesArray = Object.entries(notes);
+
+    // Filter and map notes based on search term
+    return notesArray
+      .filter(([key, value]) =>
+        searchTerm ? value.name.toLowerCase().includes(searchTerm.toLowerCase()) : true
+      )
+      .map(([key, value]) => (
+        <Accordion key={key}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="h6">{value.name}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography style={{ wordWrap: 'break-word' }}>{value.content}</Typography>
+          </AccordionDetails>
+        </Accordion>
+      ));
   }
 
   return (
@@ -78,6 +107,21 @@ const Home = () => {
                   onChange={(e) => setFileContent(e.target.value)}
                 />
                 <Button
+                  component="label"
+                  variant="outlined"
+                  size="small"
+                  style={{ marginLeft: "10px", marginRight: '10px' }}
+                >
+                  <input
+                    type="file"
+                    id="docpicker"
+                    accept=".txt"
+                    onChange={handleFileChange}
+                    style={{ display: 'none' }}
+                  />
+                  Load file
+                </Button>
+                <Button
                   disabled={enableUpload}
                   style={{ margin: "10px" }}
                   variant="outlined"
@@ -92,7 +136,7 @@ const Home = () => {
                   style={{ margin: "10px", marginTop: "15px", width: "95%" }}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  id="filterNOtes"
+                  id="filterNotes"
                   label="Search notes"
               />
               <Box style={{ margin: "10px" }}>
