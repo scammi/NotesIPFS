@@ -69,7 +69,11 @@ const Home = () => {
                 </Button>
               </Stack>
             </Paper>
-            
+            {Object.entries(notes).map(([key, value]) => (
+              <div key={key}>
+                {value?.name}
+              </div>
+            ))}
           </Stack>
         </Grid>
       </Grid>
