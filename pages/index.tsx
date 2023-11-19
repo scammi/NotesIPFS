@@ -31,7 +31,6 @@ const Home = () => {
   const { data: notes, isLoading: isNotesLoading } = useNotes();
 
   const handleFileChange = (event) => {
-    console.log('asdf')
     const fileInput = event.target;
     const file = fileInput.files[0];
 
@@ -39,19 +38,11 @@ const Home = () => {
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        // e.target.result contains the content of the file
         const content = e.target.result;
-
-        // file.name contains the name of the file
         const name = file.name;
 
-        // Set state with file content and name
         setFileContent(content);
         setFileName(name);
-
-        // Now you can use fileContent and fileName as needed
-        console.log('File Content:', content);
-        console.log('File Name:', name);
       };
 
       // Read the file as text
