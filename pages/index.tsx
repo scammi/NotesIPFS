@@ -5,7 +5,6 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
@@ -26,11 +25,6 @@ const Home = () => {
       `/api/ipfs?fileName=${fileName}&fileContent=${fileContent}`
     );
   };
-
-  // avoiding ternary operators for classes
-  function classNames(...classes: any) {
-    return classes.filter(Boolean).join(" ");
-  }
 
   return (
     <Container>
