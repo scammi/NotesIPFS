@@ -7,7 +7,6 @@ const useAddNote = () => {
 
 	return useMutation({
     mutationFn: (note) => {
-			console.log(note)
 			return axios.post(
 				`/api/ipfs?fileName=${note.fileName}&fileContent=${note.fileContent}`
 			);

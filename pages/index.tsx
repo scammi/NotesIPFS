@@ -14,6 +14,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 import useNotes from "../hooks/useNotes";
@@ -25,11 +26,8 @@ const Home = () => {
   const [fileContent, setFileContent] = useState("");
   const enableUpload = !Boolean(fileContent && fileName);
 
-  const { mutate: addNote }  = useAddNote();
-
+  const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
-  console.log(notes)
-
 
   const Notes = () => {
     return Object.entries(notes).map(([key, value]) => (
@@ -76,7 +74,7 @@ const Home = () => {
                   variant="outlined"
                   onClick={() => addNote({ fileName, fileContent })}
                 >
-                  Upload  
+                  {isNoteBeingAdded ? <CircularProgress/> : 'Upload'}  
                 </Button>
               </Stack>
             </Paper>
