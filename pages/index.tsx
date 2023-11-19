@@ -7,7 +7,12 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import useNotes from "../hooks/useNotes";
 
@@ -29,9 +34,18 @@ const Home = () => {
 
   const Notes = () => {
     return Object.entries(notes).map(([key, value]) => (
-      <div key={key}>
-        {value?.name}
-      </div>
+      <Accordion key={key}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          {value.name}
+        </AccordionSummary>
+        <AccordionDetails>
+          {value.content}
+        </AccordionDetails>
+      </Accordion>
     ));
   }
 
@@ -69,7 +83,12 @@ const Home = () => {
                 </Button>
               </Stack>
             </Paper>
-            {!isNotesLoading ? <Notes /> : <Skeleton variant="rectangular" height={200}/>}
+            <Paper elevation={4}>
+              <Box style={{ margin: "5px" }}>
+                {!isNotesLoading ? <Notes /> : <Skeleton variant="rectangular" height={200}/>}
+              </Box>
+
+            </Paper>
           </Stack>
         </Grid>
       </Grid>
