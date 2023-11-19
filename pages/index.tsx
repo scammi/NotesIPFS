@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Head from "next/head";
 import axios from "axios";
 
 import Container from "@mui/material/Container";
@@ -10,6 +9,8 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
+import useNotes from "../hooks/useNotes";
+
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -17,12 +18,8 @@ const Home = () => {
   const [fileContent, setFileContent] = useState("");
   const enableUpload = !Boolean(fileContent && fileName);
 
-  const handleLoad = async () => {
-    setLoading(true);
-    const { data } = await axios.get('/api/ipfs');
-    console.log(data);
-    setLoading(false);
-  };
+  const { data: notes } = useNotes();
+  console.log(notes)
 
   const handlePost = async () => {
     await axios.post(
