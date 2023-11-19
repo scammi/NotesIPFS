@@ -15,16 +15,16 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import Divider from '@mui/material/Divider';
 
 import useNotes from "../hooks/useNotes";
 import useAddNote from "../hooks/useAddNote";
 
-
 const Home = () => {
-  const [fileName, setFileName] = useState("");
-  const [fileContent, setFileContent] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [ fileName, setFileName ] = useState("");
+  const [ fileContent, setFileContent ] = useState("");
+  const [ searchTerm, setSearchTerm ] = useState("");
+
   const enableUpload = !Boolean(fileContent && fileName);
 
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
@@ -56,11 +56,12 @@ const Home = () => {
       <Grid container justifyContent="center">
         <Grid item xs={6}>
           <Stack spacing={5}>
-            {/* <Typography variant="h5"> Add note </Typography> */}
             <Paper elevation={4}>
               <Stack spacing={2}>
+                <Typography variant="h5" style={{ marginTop: "10px", marginLeft: "10px" }}> Add note </Typography>
+                <Divider variant="middle" style={{ marginTop: "5px" }}/>
                 <TextField
-                  style={{ margin: "10px", marginTop: "15px" }}
+                  style={{ margin: "10px" }}
                   value={fileName}
                   onChange={(e) => setFileName(e.target.value)}
                   id="fileNameInput"

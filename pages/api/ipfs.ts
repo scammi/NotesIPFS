@@ -4,7 +4,6 @@ import { create } from "ipfs-http-client";
 import { concat } from 'uint8arrays/concat'
 import all from 'it-all';
 
-
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -37,13 +36,13 @@ const retrieve = async (
   const folderDataResponse = client.files.ls('/DeSci');
   const folderDataParsed = {};
 
-  for await (const item of folderDataResponse) {
-    const concatenatedBytesData = concat(await all(client.cat(item.cid.toString())))
-    const decodedData = new TextDecoder().decode(concatenatedBytesData).toString();
+  for await (const note of folderDataResponse) {
+    const concatenatedByteNote = concat(await all(client.cat(note.cid.toString())))
+    const decodedNote = new TextDecoder().decode(concatenatedByteNote).toString();
 
-    folderDataParsed[item.cid.toString()] = {
-      'name': item.name,
-      'content': decodedData
+    folderDataParsed[note.cid.toString()] = {
+      'name': note.name,
+      'content': decodedNote
     }
   }
 
