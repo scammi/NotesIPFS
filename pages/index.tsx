@@ -88,7 +88,7 @@ const Home = () => {
             <Paper elevation={4}>
               <Stack spacing={2}>
                 <Typography variant="h5" style={{ marginTop: "10px", marginLeft: "10px" }}> Add note </Typography>
-                <Divider variant="middle" style={{ marginTop: "5px" }}/>
+                <Divider variant="middle" style={{ marginTop: "5px", marginBottom: "10px" }}/>
                 <TextField
                   style={{ margin: "10px" }}
                   value={fileName}
@@ -139,7 +139,11 @@ const Home = () => {
                   id="filterNotes"
                   label="Search notes"
               />
-              <Box style={{ margin: "10px" }}>
+              <Box style={{
+                margin: "10px",
+                overflowY: 'auto', // Add overflow scrolling to Y-axis
+                maxHeight: '40vh', // Set a maximum height to enable scrolling
+              }}>
                 {!isNotesLoading ? <Notes /> : <Skeleton variant="rectangular" height={200}/>}
               </Box>
             </Paper>
