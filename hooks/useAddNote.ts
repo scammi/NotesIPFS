@@ -1,14 +1,21 @@
 import { useMutation } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 const useAddNote = () => {
+	const queryClient = useQueryClient()
+
 	return useMutation({
-    mutationFn: (fileName, fileContent) => {
+    mutationFn: (note) => {
+			console.log(note)
 			return axios.post(
-				`/api/ipfs?fileName=${fileName}&fileContent=${fileContent}`
+				`/api/ipfs?fileName=${note.fileName}&fileContent=${note.fileContent}`
 			);
     },
-  })
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({ queryKey: ['notes'] });
+    },
+	});
 };
 
 export default useAddNote;

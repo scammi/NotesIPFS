@@ -74,7 +74,7 @@ const Home = () => {
                   disabled={enableUpload}
                   style={{ margin: "5px" }}
                   variant="outlined"
-                  onClick={() => addNote(fileName, fileContent)}
+                  onClick={() => addNote({ fileName, fileContent })}
                 >
                   Upload  
                 </Button>
