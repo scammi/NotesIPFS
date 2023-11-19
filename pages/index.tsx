@@ -37,50 +37,48 @@ const Home = () => {
 
   return (
     <Container>
-      <main>
-        <Grid container justifyContent="center">
-          <Grid item xs={6}>
-           <Paper elevation={4}>
-              <Stack spacing={2}>
-                <TextField
-                  style={{ margin: "5px" }}
-                  value={fileName}
-                  onChange={(e) => setFileName(e.target.value)}
-                  id="fileNameInput"
-                  label="File name"
-                />
-                <TextField
-                  style={{ margin: "5px" }}
-                  multiline={true}
-                  rows={3}
-                  type="text"
-                  value={fileContent}
-                  onChange={(e) => setFileContent(e.target.value)}
-                  id="fileNameInput"
-                  label="Content"
-                />
-                {/* <button
-                  onClick={handleLoad}
-                  className={classNames(
-                    "bg-slate-300 hover:bg-slate-500 text-black rounded-md p-2 drop-shadow-md w-32",
-                    loading ? "animate-pulse" : ""
-                  )}
-                >
-                  {loading ? "Loading..." : "Retrieve Data"}
-                </button> */}
-                <Button
-                  disabled={enableUpload}
-                  style={{ margin: "5px" }}
-                  variant="outlined"
-                  onClick={handlePost}
-                >
-                  Upload  
-                </Button>
-              </Stack>
-            </Paper>
-          </Grid>
+      <Grid container justifyContent="center">
+        <Grid item xs={6}>
+          <Paper elevation={4}>
+            <Stack spacing={2}>
+              <TextField
+                style={{ margin: "5px" }}
+                value={fileName}
+                onChange={(e) => setFileName(e.target.value)}
+                id="fileNameInput"
+                label="File name"
+              />
+              <TextField
+                style={{ margin: "5px" }}
+                multiline={true}
+                rows={3}
+                type="text"
+                value={fileContent}
+                onChange={(e) => setFileContent(e.target.value)}
+                id="fileNameInput"
+                label="Content"
+              />
+              {/* <button
+                onClick={handleLoad}
+                className={classNames(
+                  "bg-slate-300 hover:bg-slate-500 text-black rounded-md p-2 drop-shadow-md w-32",
+                  loading ? "animate-pulse" : ""
+                )}
+              >
+                {loading ? "Loading..." : "Retrieve Data"}
+              </button> */}
+              <Button
+                disabled={enableUpload}
+                style={{ margin: "5px" }}
+                variant="outlined"
+                onClick={handlePost}
+              >
+                Upload  
+              </Button>
+            </Stack>
+          </Paper>
         </Grid>
-      </main>
+      </Grid>
     </Container>
   );
 }
