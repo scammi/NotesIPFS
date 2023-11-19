@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-
 import { create } from "ipfs-http-client";
 import { concat } from 'uint8arrays/concat'
 import all from 'it-all';
@@ -13,9 +12,8 @@ const handler = async (
   if (req.method === "POST") {
     const { fileContent, fileName } = req.query;
 
-    const client = create();
-
     try {
+      const client = create();
       await client.files.mkdir('/DeSci', { parents: true });
       await client.files.write(`/DeSci/${fileName}.txt`, Buffer.from(fileContent), { create: true });
 
