@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 
 
 import useNotes from "../hooks/useNotes";
+import useAddNote from "../hooks/useAddNote";
 
 
 const Home = () => {
@@ -24,14 +25,11 @@ const Home = () => {
   const [fileContent, setFileContent] = useState("");
   const enableUpload = !Boolean(fileContent && fileName);
 
+  const { mutate: addNote }  = useAddNote();
+
   const { data: notes, isLoading: isNotesLoading } = useNotes();
   console.log(notes)
 
-  const handlePost = async () => {
-    await axios.post(
-      `/api/ipfs?fileName=${fileName}&fileContent=${fileContent}`
-    );
-  };
 
   const Notes = () => {
     return Object.entries(notes).map(([key, value]) => (
@@ -76,7 +74,7 @@ const Home = () => {
                   disabled={enableUpload}
                   style={{ margin: "5px" }}
                   variant="outlined"
-                  onClick={handlePost}
+                  onClick={() => addNote(fileName, fileContent)}
                 >
                   Upload  
                 </Button>
