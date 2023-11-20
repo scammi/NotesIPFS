@@ -5,6 +5,7 @@ import { mainnet } from 'viem/chains';
 
 const initialState = {
   client: {},
+  user: '',
 }
 
 export const Web3Context = createContext(initialState);
@@ -22,14 +23,18 @@ export const Web3ContextProvider = ({ children }) => {
       transport: custom(window.ethereum)
     });
 
-    setWeb3({ client })
-
+    setWeb3({ ...web3, client })
   }, []);
 
+  const connect = async () => {
+    const [ user ] = await web3.client.requestAddresses();
+    setWeb3({ ...web3, user })
+  };
+
   return(
-  <Web3Context.Provider value={[ web3, setWeb3 ]}>
-    {children}
-  </Web3Context.Provider>
+    <Web3Context.Provider value={[ web3, connect ]}>
+      {children}
+    </Web3Context.Provider>
   );
 }
 

@@ -7,16 +7,10 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 
-import { useWallet, useWeb3Context } from '../context/Web3';
+import { useWeb3Context } from '../context/Web3';
 
 const AppHeader = () => {
-  const [ user, setUser ] = useState();
-  const [ web3 ] = useWeb3Context();
-
-  const connect = async () => {
-    const [ address ] = await web3.client.requestAddresses();
-    setUser(address)
-  };
+  const [ web3, connect ] = useWeb3Context();
 
   return (
     <Box sx={{ flexGrow: 1, pb: 5 }}>
@@ -35,7 +29,7 @@ const AppHeader = () => {
            IPFS Notes 
           </Typography>
           <Button variant="contained" onClick={async() => await connect()}>
-             {Boolean(user) ? getShortAddress(user) : 'Connect'}
+             {Boolean(web3.user) ? getShortAddress(web3.user) : 'Connect'}
           </Button>
         </Toolbar>
       </AppBar>
