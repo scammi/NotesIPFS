@@ -13,7 +13,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "types": ["@mui/material", "react", "react-dom"],
+    "paths": {
+      "react": [ "./node_modules/@types/react" ]
+    },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./Components/*.tsx"],
   "exclude": ["node_modules"]
