@@ -53,7 +53,7 @@ const Home = () => {
     }
   };
 
-  const Notes = () => {
+  const Notes: React.FC = () => {
     if (notes == undefined) {
       return 'No notes ';
     }

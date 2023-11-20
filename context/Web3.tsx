@@ -1,9 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { createWalletClient, custom, recoverMessageAddress } from 'viem';
+import { createWalletClient, custom, Client } from 'viem';
 import { mainnet } from 'viem/chains';
 
-const initialState = {
+interface Web3 {
+  client: Client | {};
+  user: string;
+}
+
+const initialState: Web3 = {
   client: {},
   user: '',
 }
@@ -15,7 +20,7 @@ export const useWeb3Context = () => {
 }
 
 export const Web3ContextProvider = ({ children }) => {
-  const [ web3, setWeb3 ] = useState(initialState);
+  const [ web3, setWeb3 ] = useState<Web3>(initialState);
 
   useEffect(() => {
     const client = createWalletClient({
