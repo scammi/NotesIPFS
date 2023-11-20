@@ -48,7 +48,7 @@ const retrieve = async (
       // Concatenate chunks notes as bytes 
       const concatenatedByteNote = concat(await all(client.cat(note.cid.toString())))
 
-      //  Decode array onto string
+      //  Decode array onto stringac
       const decodedNote = new TextDecoder().decode(concatenatedByteNote).toString();
       const ipfsNote = JSON.parse(decodedNote);
       

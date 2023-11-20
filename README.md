@@ -8,6 +8,13 @@
 ## Characteristics 
 - Persistance of notes through IFPS Mutable File System (MFS).
 - Reactive WebPage using Material UI.
-- Signer address extraction from signature (Web3 integration)
+- Signer address extraction from signature (Web3 integration).
 - Allows upload of text files.
-- Search through notes
+- Search through notes.
+
+
+## Extra tools
+- Viem for web3.
+- React query for fetching data and managing state.
+- it-all to manage multiple promises.
+- uint8arrays to manipulate byte chunks.
