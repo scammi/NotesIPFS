@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { createWalletClient, custom } from 'viem';
+import { createWalletClient, custom, recoverMessageAddress } from 'viem';
 import { mainnet } from 'viem/chains';
 
 const initialState = {
@@ -34,9 +34,15 @@ export const Web3ContextProvider = ({ children }) => {
   const sign = async () => {
     const signature = await web3.client.signMessage({
       account: web3.user,
-      message: { raw: '0x68656c6c6f20776f726c64' }
+      message: 'hello world'
     });
-    console.log(signature);
+
+    const address = await recoverMessageAddress({ 
+      message: 'hello world',
+      signature,
+    })
+
+    console.log(address)
   };
 
   return(
