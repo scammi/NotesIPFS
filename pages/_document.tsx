@@ -1,5 +1,4 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import AppHeader from "../components/Header";
 
 export default function Document() {
   return (
@@ -11,7 +10,6 @@ export default function Document() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <body>
-        <AppHeader />
         <Main />
         <NextScript />
       </body>
