@@ -115,6 +115,14 @@ const Home = () => {
                     Load file
                   </Button>
                   <Button
+                    // disabled={enableUpload}
+                    style={{ margin: "10px" }}
+                    variant="outlined"
+                    onClick={() => console.log('asdf')}
+                  >
+                   Sign document 
+                  </Button>
+                  <Button
                     disabled={enableUpload}
                     style={{ margin: "10px" }}
                     variant="outlined"

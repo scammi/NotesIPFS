@@ -7,19 +7,15 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 
-import { createWalletClient, custom } from 'viem';
-import { mainnet } from 'viem/chains';
+import { useWallet, useWeb3Context } from '../context/Web3';
 
 const AppHeader = () => {
   const [ user, setUser ] = useState();
+  const [ state ] = useWeb3Context();
+  const web3client = useWallet();
 
   const connect = async () => {
-    const client = createWalletClient({
-      chain: mainnet,
-      transport: custom(window.ethereum)
-    });
-
-    const [address] = await client.requestAddresses() ;
+    const [ address ] = await web3client.requestAddresses();
     setUser(address)
   };
 
