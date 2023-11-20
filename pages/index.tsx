@@ -19,6 +19,7 @@ import AppHeader from "../components/Header";
 
 import useNotes from "../hooks/useNotes";
 import useAddNote from "../hooks/useAddNote";
+import { useWeb3Context } from "../context/Web3";
 
 const Home = () => {
   const [ fileName, setFileName ] = useState("");
@@ -29,6 +30,7 @@ const Home = () => {
 
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
+  const { sign } = useWeb3Context();
 
   const handleFileChange = (event) => {
     const fileInput = event.target;
@@ -118,7 +120,7 @@ const Home = () => {
                     // disabled={enableUpload}
                     style={{ margin: "10px" }}
                     variant="outlined"
-                    onClick={() => console.log('asdf')}
+                    onClick={async() => sign()}
                   >
                    Sign document 
                   </Button>

@@ -31,25 +31,17 @@ export const Web3ContextProvider = ({ children }) => {
     setWeb3({ ...web3, user })
   };
 
+  const sign = async () => {
+    const signature = await web3.client.signMessage({
+      account: web3.user,
+      message: { raw: '0x68656c6c6f20776f726c64' }
+    });
+    console.log(signature);
+  };
+
   return(
-    <Web3Context.Provider value={[ web3, connect ]}>
+    <Web3Context.Provider value={{ web3, connect, sign }}>
       {children}
     </Web3Context.Provider>
   );
 }
-
-
-
-export const useWallet = () => {
-  // const client = createWalletClient({
-  //   chain: mainnet,
-  //   transport: custom(window.ethereum)
-  // });
-
-  // return client;
-}
-
-
-
-
-

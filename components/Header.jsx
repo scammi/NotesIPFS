@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,7 +10,7 @@ import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import { useWeb3Context } from '../context/Web3';
 
 const AppHeader = () => {
-  const [ web3, connect ] = useWeb3Context();
+  const { web3, connect } = useWeb3Context();
 
   return (
     <Box sx={{ flexGrow: 1, pb: 5 }}>
