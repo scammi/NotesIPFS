@@ -28,7 +28,7 @@ const Home = () => {
   const [ searchTerm, setSearchTerm ] = useState("");
   
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
-  const { data: notes, isLoading: isNotesLoading } = useNotes();
+  const { data: notes, isLoading: isNotesLoading, isError: isNotesError } = useNotes();
   const { web3 } = useWeb3Context();
 
   const enableUpload = !Boolean(fileContent && fileName && web3.user);
@@ -54,9 +54,15 @@ const Home = () => {
   };
 
   const Notes = () => {
-    // Convert object to array of key-value pairs
-    const notesArray = Object.entries(notes);
+    if (notes == undefined) {
+      return 'No notes ';
+    }
 
+    if (isNotesError) {
+      return 'Error getting notes';
+    }
+
+    const notesArray = Object.entries(notes);
     // Filter and map notes based on search term
     return notesArray
       .filter(([key, value]) =>
@@ -109,7 +115,7 @@ const Home = () => {
                     component="label"
                     variant="outlined"
                     size="small"
-                    style={{ marginLeft: "10px", marginRight: '10px' }}
+                    style={{ marginLeft: "10px", marginRight: '10px', marginTop: '0px' }}
                   >
                     <input
                       type="file"

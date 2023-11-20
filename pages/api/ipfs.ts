@@ -5,7 +5,7 @@ import { concat } from 'uint8arrays/concat'
 import { recoverMessageAddress } from "viem";
 import all from 'it-all';
 
-const FOLDER = '/DeSci1'
+const FOLDER = '/DeSci2'
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -40,25 +40,28 @@ const retrieve = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const client = create();
-
-  const folderDataResponse = client.files.ls(`${FOLDER}`);
-  const folderDataParsed = {};
-
-  for await (const note of folderDataResponse) {
-    const concatenatedByteNote = concat(await all(client.cat(note.cid.toString())))
-    const decodedNote = new TextDecoder().decode(concatenatedByteNote).toString();
-    const ipfsNote = JSON.parse(decodedNote);
-
-    folderDataParsed[note.cid.toString()] = {
-      'name': note.name,
-      'content': ipfsNote.content,
-      'signature': ipfsNote.signature,
-      'signer': await recoverMessageAddress({ message: ipfsNote.content, signature: ipfsNote.signature }),
+  try {
+    const client = create();
+    const folderDataResponse = client.files.ls(`${FOLDER}`);
+    const folderDataParsed = {};
+    for await (const note of folderDataResponse) {
+      const concatenatedByteNote = concat(await all(client.cat(note.cid.toString())))
+      const decodedNote = new TextDecoder().decode(concatenatedByteNote).toString();
+      const ipfsNote = JSON.parse(decodedNote);
+      
+      folderDataParsed[note.cid.toString()] = {
+        'name': note.name,
+        'content': ipfsNote.content,
+        'signature': ipfsNote.signature,
+        'signer': await recoverMessageAddress({ message: ipfsNote.content, signature: ipfsNote.signature }),
+      }
     }
+  
+    res.status(200).json({ folderDataParsed });
+  } catch(error) {
+    console.error('Error loading file to IPFS:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
-
-  res.status(200).json({ folderDataParsed });
 };
 
 
