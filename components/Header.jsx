@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,14 +11,16 @@ import { createWalletClient, custom } from 'viem';
 import { mainnet } from 'viem/chains';
 
 const AppHeader = () => {
+  const [ user, setUser ] = useState();
 
   const connect = async () => {
     const client = createWalletClient({
       chain: mainnet,
       transport: custom(window.ethereum)
-    })
-    const [address] = await client.requestAddresses() 
-    console.log(address)
+    });
+
+    const [address] = await client.requestAddresses() ;
+    setUser(address)
   };
 
   return (
@@ -38,12 +40,23 @@ const AppHeader = () => {
            IPFS Notes 
           </Typography>
           <Button variant="contained" onClick={async() => await connect()}>
-            Connect
+             {Boolean(user) ? getShortAddress(user) : 'Connect'}
           </Button>
         </Toolbar>
       </AppBar>
     </Box>
   );
+}
+
+const getShortAddress = (address, prefixLength = 7, suffixLength = 4) => {
+  if (address.length < prefixLength + suffixLength) {
+      return address; // Return the full address if it's too short
+  }
+
+  const prefix = address.slice(0, prefixLength);
+  const suffix = address.slice(-suffixLength);
+
+  return `${prefix}...${suffix}`;
 }
 
 export default AppHeader;
