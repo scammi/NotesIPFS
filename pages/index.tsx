@@ -123,7 +123,7 @@ const Home = () => {
                     variant="outlined"
                     onClick={() => addNote({ fileName, fileContent })}
                   >
-                    {isNoteBeingAdded ? <CircularProgress /> : 'Upload'}  
+                    {isNoteBeingAdded ? <CircularProgress size={24} /> : 'Upload'}  
                   </Button>
                 </Stack>
               </Paper>

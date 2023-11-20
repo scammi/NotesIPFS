@@ -18,6 +18,9 @@ const useAddNote = () => {
     onSettled: async () => {
       return await queryClient.invalidateQueries({ queryKey: ['notes'] });
     },
+    onError: () => {
+      return
+    }
   });
 };
 
