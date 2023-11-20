@@ -7,8 +7,13 @@ const useAddNote = () => {
   const queryClient = useQueryClient()
   const { sign } = useWeb3Context();
 
+  interface Note {
+    fileContent: string;
+    fileName: string;
+  }
+  
   return useMutation({
-    mutationFn: async (note) => {
+    mutationFn: async (note: Note) => {
       const signature = await sign(note.fileContent);
 
       return axios.post(
