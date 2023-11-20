@@ -19,6 +19,7 @@ import AppHeader from "../components/Header";
 
 import useNotes from "../hooks/useNotes";
 import useAddNote from "../hooks/useAddNote";
+import { getShortAddress } from "../utils/address";
 import { useWeb3Context } from "../context/Web3";
 
 const Home = () => {
@@ -29,6 +30,7 @@ const Home = () => {
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
   const { web3 } = useWeb3Context();
+
   const enableUpload = !Boolean(fileContent && fileName && web3.user);
 
   const handleFileLoad = (event) => {
@@ -65,7 +67,7 @@ const Home = () => {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Grid container justifyContent="space-between" alignItems="center">
               <Typography variant="h6">{value.name.replace(/\.[^.]+$/, '')}</Typography>
-              <Typography variant="overline">{value.signer}</Typography>
+              <Typography variant="overline">{getShortAddress(value.signer, 14)}</Typography>
             </Grid>
           </AccordionSummary>
           <AccordionDetails>

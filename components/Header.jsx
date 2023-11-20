@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 
 import { useWeb3Context } from '../context/Web3';
+import { getShortAddress } from '../utils/address';
 
 const AppHeader = () => {
   const { web3, connect } = useWeb3Context();
@@ -35,17 +36,6 @@ const AppHeader = () => {
       </AppBar>
     </Box>
   );
-}
-
-const getShortAddress = (address, prefixLength = 7, suffixLength = 4) => {
-  if (address.length < prefixLength + suffixLength) {
-      return address; // Return the full address if it's too short
-  }
-
-  const prefix = address.slice(0, prefixLength);
-  const suffix = address.slice(-suffixLength);
-
-  return `${prefix}...${suffix}`;
 }
 
 export default AppHeader;
