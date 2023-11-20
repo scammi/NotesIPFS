@@ -1,5 +1,5 @@
 
-export const getShortAddress = (address, prefixLength = 7, suffixLength = 4) => {
+export const getShortAddress = (address: string, prefixLength = 7, suffixLength = 4) => {
   if (address.length < prefixLength + suffixLength) {
     return address; // Return the full address if it's too short
   }
