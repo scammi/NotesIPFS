@@ -47,11 +47,12 @@ const retrieve = async (
   for await (const note of folderDataResponse) {
     const concatenatedByteNote = concat(await all(client.cat(note.cid.toString())))
     const decodedNote = new TextDecoder().decode(concatenatedByteNote).toString();
+    const ipfsNote = JSON.parse(decodedNote);
 
     folderDataParsed[note.cid.toString()] = {
       'name': note.name,
-      'content': decodedNote.content,
-      'signature': decodedNote.signature
+      'content': ipfsNote.content,
+      'signature': ipfsNote.signature
     }
   }
 
