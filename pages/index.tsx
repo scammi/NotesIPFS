@@ -62,7 +62,10 @@ const Home = () => {
       .map(([key, value]) => (
         <Accordion key={key}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h6">{value.name}</Typography>
+            <Grid container justifyContent="space-between" alignItems="center">
+              <Typography variant="h6">{value.name.replace(/\.[^.]+$/, '')}</Typography>
+              <Typography variant="overline">{value.signer}</Typography>
+            </Grid>
           </AccordionSummary>
           <AccordionDetails>
             <Typography style={{ wordWrap: 'break-word' }}>{value.content}</Typography>

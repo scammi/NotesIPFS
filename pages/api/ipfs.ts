@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { create } from "ipfs-http-client";
 import { concat } from 'uint8arrays/concat'
+import { recoverMessageAddress } from "viem";
 import all from 'it-all';
 
 const FOLDER = '/DeSci1'
@@ -52,7 +53,8 @@ const retrieve = async (
     folderDataParsed[note.cid.toString()] = {
       'name': note.name,
       'content': ipfsNote.content,
-      'signature': ipfsNote.signature
+      'signature': ipfsNote.signature,
+      'signer': await recoverMessageAddress({ message: ipfsNote.content, signature: ipfsNote.signature }),
     }
   }
 
