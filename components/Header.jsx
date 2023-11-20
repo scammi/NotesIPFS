@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,7 +7,14 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 
+import { createWalletClient, custom } from 'viem';
+import { mainnet } from 'viem/chains';
+
 const AppHeader = () => {
+  useEffect(() => {
+    console.log('asdf')
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1, pb: 5 }}>
       <AppBar position="static">
