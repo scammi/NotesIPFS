@@ -19,20 +19,16 @@ import AppHeader from "../components/Header";
 
 import useNotes from "../hooks/useNotes";
 import useAddNote from "../hooks/useAddNote";
-import { useWeb3Context } from "../context/Web3";
 
 const Home = () => {
   const [ fileName, setFileName ] = useState("");
   const [ fileContent, setFileContent ] = useState("");
-  const [ signature, setSignature ] = useState("");
   const [ searchTerm, setSearchTerm ] = useState("");
 
   const enableUpload = !Boolean(fileContent && fileName && signature);
-  const enableSignature = !Boolean(fileContent && fileName);
 
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
-  const { sign } = useWeb3Context();
 
   const handleFileLoad = (event) => {
     const fileInput = event.target;
@@ -52,11 +48,6 @@ const Home = () => {
       // Read the file as text
       reader.readAsText(file);
     }
-  };
-
-  const handleSignature = async () => {
-    const signature = await sign(fileContent);
-    setSignature(signature);
   };
 
   const Notes = () => {
@@ -122,14 +113,6 @@ const Home = () => {
                       style={{ display: 'none' }}
                     />
                     Load file
-                  </Button>
-                  <Button
-                    disabled={enableSignature}
-                    style={{ margin: "10px" }}
-                    variant="outlined"
-                    onClick={async() => await handleSignature()}
-                  >
-                   Sign document 
                   </Button>
                   <Button
                     disabled={enableUpload}
