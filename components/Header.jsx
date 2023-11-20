@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 
 const AppHeader = () => {
@@ -23,6 +24,9 @@ const AppHeader = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
            IPFS Notes 
           </Typography>
+          <Button variant="contained" onClick={() => console.log('Click')}>
+            Connect
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
