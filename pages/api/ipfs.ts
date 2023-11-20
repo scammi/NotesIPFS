@@ -4,17 +4,25 @@ import { create } from "ipfs-http-client";
 import { concat } from 'uint8arrays/concat'
 import all from 'it-all';
 
+const FOLDER = '/DeSci1'
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   if (req.method === "POST") {
-    const { fileContent, fileName } = req.query;
+    const { fileContent, fileName, signature } = req.query;
 
     try {
       const client = create();
-      await client.files.mkdir('/DeSci', { parents: true });
-      await client.files.write(`/DeSci/${fileName}.txt`, Buffer.from(fileContent), { create: true });
+      
+      const ipfsNote = {
+        name: fileName,
+        content: fileContent,
+        signature
+      }
+
+      await client.files.mkdir(`${FOLDER}`, { parents: true });
+      await client.files.write(`${FOLDER}/${fileName}.json`, Buffer.from(JSON.stringify(ipfsNote)), { create: true });
 
       res.status(200).json({ success: true });
     } catch (error) {
@@ -33,7 +41,7 @@ const retrieve = async (
 ) => {
   const client = create();
 
-  const folderDataResponse = client.files.ls('/DeSci');
+  const folderDataResponse = client.files.ls(`${FOLDER}`);
   const folderDataParsed = {};
 
   for await (const note of folderDataResponse) {
@@ -42,7 +50,8 @@ const retrieve = async (
 
     folderDataParsed[note.cid.toString()] = {
       'name': note.name,
-      'content': decodedNote
+      'content': decodedNote.content,
+      'signature': decodedNote.signature
     }
   }
 

@@ -25,7 +25,7 @@ const Home = () => {
   const [ fileContent, setFileContent ] = useState("");
   const [ searchTerm, setSearchTerm ] = useState("");
 
-  const enableUpload = !Boolean(fileContent && fileName && signature);
+  const enableUpload = !Boolean(fileContent && fileName);
 
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
