@@ -11,11 +11,10 @@ import { useWallet, useWeb3Context } from '../context/Web3';
 
 const AppHeader = () => {
   const [ user, setUser ] = useState();
-  const [ state ] = useWeb3Context();
-  const web3client = useWallet();
+  const [ web3 ] = useWeb3Context();
 
   const connect = async () => {
-    const [ address ] = await web3client.requestAddresses();
+    const [ address ] = await web3.client.requestAddresses();
     setUser(address)
   };
 
