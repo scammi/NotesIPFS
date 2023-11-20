@@ -31,18 +31,21 @@ export const Web3ContextProvider = ({ children }) => {
     setWeb3({ ...web3, user })
   };
 
-  const sign = async () => {
+  const sign = async (message: string) => {
     const signature = await web3.client.signMessage({
       account: web3.user,
-      message: 'hello world'
+      message 
     });
+    console.log(signature)
 
-    const address = await recoverMessageAddress({ 
-      message: 'hello world',
-      signature,
-    })
+    // const address = await recoverMessageAddress({ 
+    //   message: 'hello world',
+    //   signature,
+    // })
 
-    console.log(address)
+    // console.log(address)
+
+    return signature;
   };
 
   return(

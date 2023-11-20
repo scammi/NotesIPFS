@@ -24,15 +24,17 @@ import { useWeb3Context } from "../context/Web3";
 const Home = () => {
   const [ fileName, setFileName ] = useState("");
   const [ fileContent, setFileContent ] = useState("");
+  const [ signature, setSignature ] = useState("");
   const [ searchTerm, setSearchTerm ] = useState("");
 
-  const enableUpload = !Boolean(fileContent && fileName);
+  const enableUpload = !Boolean(fileContent && fileName && signature);
+  const enableSignature = !Boolean(fileContent && fileName);
 
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
   const { sign } = useWeb3Context();
 
-  const handleFileChange = (event) => {
+  const handleFileLoad = (event) => {
     const fileInput = event.target;
     const file = fileInput.files[0];
 
@@ -50,6 +52,11 @@ const Home = () => {
       // Read the file as text
       reader.readAsText(file);
     }
+  };
+
+  const handleSignature = async () => {
+    const signature = await sign(fileContent);
+    setSignature(signature);
   };
 
   const Notes = () => {
@@ -111,16 +118,16 @@ const Home = () => {
                       type="file"
                       id="docpicker"
                       accept=".txt"
-                      onChange={handleFileChange}
+                      onChange={handleFileLoad}
                       style={{ display: 'none' }}
                     />
                     Load file
                   </Button>
                   <Button
-                    // disabled={enableUpload}
+                    disabled={enableSignature}
                     style={{ margin: "10px" }}
                     variant="outlined"
-                    onClick={async() => sign()}
+                    onClick={async() => await handleSignature()}
                   >
                    Sign document 
                   </Button>
