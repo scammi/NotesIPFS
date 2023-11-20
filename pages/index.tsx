@@ -48,7 +48,6 @@ const Home = () => {
         setFileName(name);
       };
 
-      // Read the file as text
       reader.readAsText(file);
     }
   };
@@ -146,8 +145,8 @@ const Home = () => {
                 />
                 <Box style={{
                   margin: "10px",
-                  overflowY: 'auto', // Add overflow scrolling to Y-axis
-                  maxHeight: '40vh', // Set a maximum height to enable scrolling
+                  overflowY: 'auto',
+                  maxHeight: '40vh',
                 }}>
                   {!isNotesLoading ? <Notes /> : <Skeleton variant="rectangular" height={200}/>}
                 </Box>

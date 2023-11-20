@@ -5,7 +5,7 @@ import { concat } from 'uint8arrays/concat'
 import { recoverMessageAddress } from "viem";
 import all from 'it-all';
 
-const FOLDER = '/DeSci2'
+const FOLDER = '/DeSci3'
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -45,7 +45,10 @@ const retrieve = async (
     const folderDataResponse = client.files.ls(`${FOLDER}`);
     const folderDataParsed = {};
     for await (const note of folderDataResponse) {
+      // Concatenate chunks notes as bytes 
       const concatenatedByteNote = concat(await all(client.cat(note.cid.toString())))
+
+      //  Decode array onto string
       const decodedNote = new TextDecoder().decode(concatenatedByteNote).toString();
       const ipfsNote = JSON.parse(decodedNote);
       
