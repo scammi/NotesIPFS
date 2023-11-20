@@ -36,14 +36,6 @@ export const Web3ContextProvider = ({ children }) => {
       account: web3.user,
       message 
     });
-    console.log(signature)
-
-    // const address = await recoverMessageAddress({ 
-    //   message: 'hello world',
-    //   signature,
-    // })
-
-    // console.log(address)
 
     return signature;
   };

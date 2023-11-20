@@ -19,16 +19,17 @@ import AppHeader from "../components/Header";
 
 import useNotes from "../hooks/useNotes";
 import useAddNote from "../hooks/useAddNote";
+import { useWeb3Context } from "../context/Web3";
 
 const Home = () => {
   const [ fileName, setFileName ] = useState("");
   const [ fileContent, setFileContent ] = useState("");
   const [ searchTerm, setSearchTerm ] = useState("");
-
-  const enableUpload = !Boolean(fileContent && fileName);
-
+  
   const { mutate: addNote, isPending: isNoteBeingAdded }  = useAddNote();
   const { data: notes, isLoading: isNotesLoading } = useNotes();
+  const { web3 } = useWeb3Context();
+  const enableUpload = !Boolean(fileContent && fileName && web3.user);
 
   const handleFileLoad = (event) => {
     const fileInput = event.target;
